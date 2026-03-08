@@ -49,7 +49,7 @@ Fitur keranjang memungkinkan pengguna:
 ## 📦 Instalasi
 
 ```bash
-git clone https://github.com/username/nama-project.git
+git clone https://github.com/bruryansah/Final_Design.git
 cd nama-project
 composer install
 cp .env.example .env
