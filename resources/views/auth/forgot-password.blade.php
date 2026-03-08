@@ -1,25 +1,55 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+    <x-slot name="title">Lupa Password — AutoPart Original</x-slot>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    {{-- Back Button --}}
+    <a href="{{ route('login') }}" class="btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M5 12l7 7M5 12l7-7"/>
+        </svg>
+        Kembali ke Login
+    </a>
+
+    {{-- Header --}}
+    <h1 class="auth-form-title">Lupa Password</h1>
+    <p class="auth-form-subtitle">
+        Masukkan email kamu dan kami akan mengirimkan link reset password.
+    </p>
+
+    {{-- Session Status --}}
+    @if (session('status'))
+        <div class="auth-status">{{ session('status') }}</div>
+    @endif
 
     <form method="POST" action="{{ route('password.email') }}">
         @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Email --}}
+        <div class="form-field">
+            <label for="email" class="form-label">Email</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                value="{{ old('email') }}"
+                class="form-input"
+                placeholder="email@contoh.com"
+                required
+                autofocus
+            >
+            @error('email')
+                <p class="form-error">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
+        <button type="submit" class="btn-submit btn-submit-full">
+            Kirim Link Reset Password
+        </button>
+
+        <div class="auth-divider">atau</div>
+
+        <p style="text-align:center; font-size:13px; color:#888;">
+            Ingat password kamu?
+            <a href="{{ route('login') }}" style="color:#E02020; font-weight:600; text-decoration:none;">Masuk di sini →</a>
+        </p>
     </form>
 </x-guest-layout>
