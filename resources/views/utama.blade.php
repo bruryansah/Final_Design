@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoPart Original – Toko Spare Part Mobil Terlengkap</title>
+    <title>AutoPart Original – Toko Spare Part Motor Terlengkap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@
     ============================================================ -->
     <section class="section-hero" id="home">
         <div class="hero-overlay"></div>
-        <img src="" alt="Hero Background" class="hero-bg-img" id="heroBgImg">
+        <img src="{{ 'assets/img/ice-v.jpg' }}" alt="Hero Background" class="hero-bg-img" id="heroBgImg">
         <div class="hero-wrapper">
             <div class="hero-content">
                 <div class="hero-eyebrow">✦ Suku Cadang Mobil Original &amp; Terlengkap</div>
@@ -129,7 +129,7 @@
 
                 <div class="about-visual">
                     <div class="about-image-box">
-                        <img src="" alt="About AutoPart Original" class="about-img" id="aboutImg">
+                        <img src="{{'assets/img/workshop.jpg'}}" alt="About AutoPart Original" class="about-img" id="aboutImg">
                     </div>
                 </div>
 
