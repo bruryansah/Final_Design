@@ -12,11 +12,11 @@ class Pembelian extends Model
 
     public function produk()
     {
-        return $this->belongsTo(produk::class);
+        return $this->belongsTo(Produk::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 }

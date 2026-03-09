@@ -2,69 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembelian;
+use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Throwable;
 
 class PembelianCon extends Controller
 {
     public function storeinput(Request $request)
     {
-        // Validasi input minimal
+        // Validasi input minimal (harga dari client diabaikan seluruhnya)
         $validated = $request->validate([
             'kodeproduk' => 'required|integer|exists:produks,id',
             'banyak' => 'required|integer|min:1',
-            'harga' => 'required|numeric|min:0',
-            'nama_user' => 'nullable|string|max:255', // untuk guest/user menulis nama
+            'nama_user' => 'nullable|string|max:255',
         ]);
 
-        // Transaksi agar stok konsisten dan mencegah overselling
-        DB::beginTransaction();
         try {
-            // Lock row produk untuk update stok aman
-            $produk = DB::table('produks')->where('id', $validated['kodeproduk'])->lockForUpdate()->first();
+            DB::transaction(function () use ($validated) {
+                // Ambil produk dan kunci barisnya untuk mencegah race condition stok
+                $produk = Produk::lockForUpdate()->findOrFail($validated['kodeproduk']);
 
-            if (!$produk) {
-                abort(404, 'Produk tidak ditemukan');
-            }
+                // Cek stok cukup
+                $qty = (int) $validated['banyak'];
+                if ($produk->stok < $qty) {
+                    abort(400, 'Stok tidak mencukupi. Sisa stok: ' . (int) $produk->stok);
+                }
 
-            // Cek stok cukup
-            if ((int) $produk->stok < (int) $validated['banyak']) {
-                DB::rollBack();
-                return back()->withErrors(['banyak' => 'Stok tidak mencukupi. Sisa stok: ' . (int) $produk->stok]);
-            }
+                // Buat kode pembelian unik
+                $username = Auth::check() ? Auth::user()->name : ($validated['nama_user'] ?? 'Guest');
+                $kode = 'P-' . $produk->id . '-' . preg_replace('/\s+/', '', $username) . '-' . now()->format('YmdHis') . '-' . substr(Str::uuid()->toString(), -6);
 
-            $data = DB::table('pembelians')->count();
-            $result = $data + 1;
+                $userId = Auth::id();
+                if (!$userId) {
+                    abort(401, 'Sesi login berakhir. Silakan login kembali.');
+                }
+                $bayar = (int) $produk->harga * $qty;
 
-            $userId = Auth::check() ? Auth::user()->id : null;
-            $userName = Auth::check() ? Auth::user()->name : ($validated['nama_user'] ?? 'Guest');
+                // Simpan pembelian
+                Pembelian::create([
+                    'kode_pembelian' => $kode,
+                    'produk_id' => $produk->id,
+                    'banyak' => $qty,
+                    'bayar' => $bayar,
+                    'user_id' => $userId,
+                    'status' => 'Verifikasi',
+                ]);
 
-            // Simpan pembelian dan tetap rekam relasi user_id untuk konsistensi data
-            DB::table('pembelians')->insert([
-                'kode_pembelian' => "P-" . $validated['kodeproduk'] . "-" . ($userName) . $result,
-                'produk_id' => $validated['kodeproduk'],
-                'banyak' => $validated['banyak'],
-                'bayar' => $validated['harga'] * $validated['banyak'],
-                'user_id' => $userId,
-                'status' => 'Verifikasi',
-            ]);
-
-            // Kurangi stok produk sesuai banyak yang dibeli
-            DB::table('produks')->where('id', $validated['kodeproduk'])->update([
-                'stok' => (int) $produk->stok - (int) $validated['banyak'],
-            ]);
-
-            DB::commit();
+                // Kurangi stok
+                $produk->decrement('stok', $qty);
+            });
         } catch (Throwable $e) {
-            DB::rollBack();
             Log::error('Gagal membuat pembelian: ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return back()->withErrors(['error' => 'Terjadi kesalahan saat memproses pembelian.']);
+            return back()->withErrors(['error' => 'Gagal: ' . $e->getMessage()]);
         }
 
-        // alihkan halaman ke route pembelian
-        return redirect('/admin/pembelians');
+        return redirect('/admin/pembelians')->with('success', 'Pembelian berhasil dibuat.');
     }
 }

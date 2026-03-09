@@ -54,7 +54,7 @@
                     <span class="greeting-time" id="greetingTime"></span>
                     <span class="greeting-name">{{ Auth::user()->name }}</span>
                 </div>
-                <form action="/logout" method="POST" style="display:inline">
+                <form action="/logout" method="POST" style="display:inline" onsubmit="return confirm('Anda yakin ingin logout?');">
                     @csrf
                     <button type="submit" class="btn-logout">Logout</button>
                 </form>
@@ -266,12 +266,16 @@
                                         </div>
                                         @endisset
                                     </div>
-                                    <form action="/pembelian/storeinput" method="POST" class="modal-form">
+                                    <form action="{{ route('storeInputpembelian') }}" method="POST" class="modal-form" onsubmit="return confirm('Konfirmasi pembelian sekarang?');">
                                         @csrf
+                                        @if ($errors->any())
+                                            <div class="alert-error" style="color:#b91c1c; background:#fee2e2; padding:8px; border-radius:6px; margin-bottom:8px;">
+                                                @foreach ($errors->all() as $error)
+                                                    <div>{{ $error }}</div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                         <input type="hidden" name="kodeproduk" value="{{ $p->id }}">
-                                        @isset($p->harga)
-                                        <input type="hidden" name="harga" value="{{ $p->harga }}">
-                                        @endisset
                                         <div class="modal-field">
                                             <label for="banyak-{{ $p->id }}" class="modal-field-label">Jumlah Pembelian</label>
                                             <div class="qty-wrap">
@@ -332,7 +336,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-divider"></div>
-                                    <form action="/keranjang/store" method="POST" class="modal-form">
+                                    <form action="/keranjang/store" method="POST" class="modal-form" onsubmit="return confirm('Tambahkan produk ini ke keranjang?');">
                                         @csrf
                                         <input type="hidden" name="produk_id" value="{{ $p->id }}">
                                         <div class="modal-field">

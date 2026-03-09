@@ -25,7 +25,7 @@ class PembeliansTable
                 TextColumn::make('bayar')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('user_id')
+                TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('status')

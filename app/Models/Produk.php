@@ -12,11 +12,11 @@ class Produk extends Model
 
     public function pembelian()
     {
-        return $this->hasMany(pembelian::class);
+        return $this->hasMany(Pembelian::class);
     }
 
     protected $casts = [
-    'harga' => 'integer',
-    'stok' => 'integer',
+        'harga' => 'integer',
+        'stok' => 'integer',
     ];
 }

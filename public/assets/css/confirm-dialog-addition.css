@@ -1,0 +1,161 @@
+/* ============================================================
+   CONFIRMATION DIALOG — Tambahkan di akhir style.css
+============================================================ */
+
+/* Overlay confirm dialog */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    background: rgba(0, 0, 0, 0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+    backdrop-filter: blur(6px);
+}
+.confirm-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Dialog box */
+.confirm-box {
+    background: var(--white);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 28px 64px rgba(0, 0, 0, 0.3);
+    border-top: 3px solid var(--red);
+    transform: translateY(20px) scale(0.96);
+    transition: transform 0.22s ease;
+    overflow: hidden;
+}
+.confirm-overlay.open .confirm-box {
+    transform: translateY(0) scale(1);
+}
+
+/* Icon area */
+.confirm-icon-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 28px 24px 0;
+}
+.confirm-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+.confirm-icon.icon-beli    { background: #FFF0F0; }
+.confirm-icon.icon-keranjang { background: #F0F4FF; }
+.confirm-icon.icon-logout  { background: #FFF8E7; }
+
+/* Content */
+.confirm-content {
+    padding: 18px 28px 24px;
+    text-align: center;
+}
+.confirm-label {
+    font-family: var(--font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--red);
+    display: block;
+    margin-bottom: 8px;
+}
+.confirm-title {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+.confirm-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.65;
+    margin-bottom: 0;
+}
+.confirm-message strong {
+    color: var(--black);
+    font-weight: 600;
+}
+
+/* Divider */
+.confirm-divider {
+    height: 1px;
+    background: #eee;
+    margin: 0 28px;
+}
+
+/* Buttons */
+.confirm-actions {
+    display: flex;
+    gap: 0;
+    padding: 16px 28px 24px;
+    gap: 10px;
+}
+.confirm-btn-no {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: var(--radius);
+    border: 1.5px solid #ddd;
+    color: #666;
+    background: transparent;
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+    cursor: pointer;
+}
+.confirm-btn-no:hover {
+    border-color: var(--black);
+    color: var(--black);
+    background: #F5F5F5;
+}
+
+.confirm-btn-yes {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex: 2;
+    padding: 11px 16px;
+    border-radius: var(--radius);
+    border: none;
+    color: var(--white);
+    background: var(--red);
+    transition: background var(--transition), transform var(--transition);
+    cursor: pointer;
+}
+.confirm-btn-yes:hover {
+    background: var(--red-dark);
+    transform: translateY(-1px);
+}
+.confirm-btn-yes.btn-yes-logout {
+    background: #C45000;
+}
+.confirm-btn-yes.btn-yes-logout:hover {
+    background: #A33D00;
+}
+.confirm-btn-yes.btn-yes-keranjang {
+    background: var(--black);
+}
+.confirm-btn-yes.btn-yes-keranjang:hover {
+    background: #333;
+}
