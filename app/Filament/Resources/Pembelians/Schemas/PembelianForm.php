@@ -13,19 +13,29 @@ class PembelianForm
         return $schema
             ->components([
                 TextInput::make('kode_pembelian')
-                    ->required(),
+                    ->required()
+                    ->disabled(),
+
                 TextInput::make('produk_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
+
                 TextInput::make('banyak')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
+
                 TextInput::make('bayar')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
+
                 TextInput::make('user_id')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
+
                 Select::make('status')
                     ->options([
                         'Verifikasi' => 'Verifikasi',

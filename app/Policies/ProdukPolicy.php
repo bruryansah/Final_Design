@@ -12,7 +12,6 @@ class ProdukPolicy
      * Menampilkan / Menghilangkan Tampilan Menu Produks
      */
     public function viewAny(User $user): bool
-
     {
         return Auth::user()->role === 'Admin';
     }
@@ -38,7 +37,11 @@ class ProdukPolicy
      */
     public function update(User $user, Produk $produk): bool
     {
-        return Auth::user()->role === 'Admin';
+        // Cegah stok negatif
+        if ($produk->stok < 1) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -53,7 +56,6 @@ class ProdukPolicy
      * Determine whether the user can restore the model.
      */
     public function restore(User $user, Produk $produk): bool
-
     {
         return false;
     }

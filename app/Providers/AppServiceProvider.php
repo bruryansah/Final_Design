@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Filament\Facades\Filament;
 use Filament\Navigation\NavigationItem;
+use App\Models\Produk;
+use App\Models\Pembelian;
+use App\Policies\ProdukPolicy;
+use App\Policies\PembelianPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,4 +38,8 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
     }
+    protected $policies = [
+        Produk::class => ProdukPolicy::class,
+        Pembelian::class => PembelianPolicy::class,
+    ];
 }

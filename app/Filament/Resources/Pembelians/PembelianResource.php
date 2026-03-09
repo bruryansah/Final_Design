@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class PembelianResource extends Resource
 {
@@ -46,5 +47,18 @@ class PembelianResource extends Resource
             'create' => CreatePembelian::route('/create'),
             'edit' => EditPembelian::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        // Admin lihat semua
+        if (auth()->user()->role === 'Admin') {
+            return $query;
+        }
+
+        // User biasa hanya lihat pembeliannya sendiri
+        return $query->where('user_id', auth()->id());
     }
 }

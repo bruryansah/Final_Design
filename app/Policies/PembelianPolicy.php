@@ -29,7 +29,7 @@ class PembelianPolicy
      */
     public function create(User $user): bool
     {
-        return Auth::user()->role === 'Admin';
+        return false;
     }
 
     /**

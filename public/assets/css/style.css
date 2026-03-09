@@ -1,8 +1,4 @@
-/* ============================================================
-   AUTOPART ORIGINAL — style.css
-   Font: Barlow Condensed (headings) + Barlow (body)
-   Theme: Industrial / Mechanical — Black, White, Red (#E02020)
-============================================================ */
+
 
 /* ---------- CSS Variables ---------- */
 :root {
@@ -41,6 +37,111 @@ a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
 
+
+/* ══════════════════════════════════════
+           LOADING SCREEN
+        ══════════════════════════════════════ */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-family: var(--font-head);
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: logoPulse 1.2s ease infinite alternate;
+        }
+
+        .loader-logo span {
+            color: var(--red);
+        }
+
+        @keyframes logoPulse {
+            from {
+                opacity: 0.6;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Track bar */
+        .loader-track {
+            width: 220px;
+            height: 3px;
+            background: var(--dark3);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-bar {
+            position: absolute;
+            top: 0;
+            left: -40%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--red), transparent);
+            border-radius: 2px;
+            animation: barSlide 1s ease infinite;
+        }
+
+        @keyframes barSlide {
+            0% {
+                left: -40%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .loader-text {
+            font-family: var(--font-head);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Gear spinner */
+        .loader-gear {
+            font-size: 40px;
+            animation: spin 2s linear infinite;
+            filter: grayscale(0.2);
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
 /* ============================================================
    NAVBAR
 ============================================================ */

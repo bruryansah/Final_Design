@@ -297,5 +297,17 @@
             greetEl.textContent = greet;
         }
     });
+    // Loading screen — tampil 1.6 detik lalu fade out
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var loader = document.getElementById('loader');
+                var page = document.getElementById('pageWrap');
+                loader.classList.add('hidden');
+                setTimeout(function() {
+                    page.classList.add('visible');
+                    loader.style.display = 'none';
+                }, 500);
+            }, 1600);
+        });
 
 })();

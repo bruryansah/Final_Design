@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoPart Original – Toko Spare Part Motor Terlengkap</title>
+    <title>NXLS MECHANICAL – Toko Spare Part Motor Terlengkap</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -12,6 +12,15 @@
 </head>
 
 <body>
+    <!-- ══ LOADER ══ -->
+    <div id="loader">
+        <div class="loader-gear">⚙️</div>
+        <div class="loader-logo">NXLS <span>MECHANICAL</span></div>
+        <div class="loader-track">
+            <div class="loader-bar"></div>
+        </div>
+        <p class="loader-text">Memuat Halaman...</p>
+    </div>
 
     <!-- ============================================================
          NAVBAR
@@ -164,7 +173,7 @@
                         </button>
                         @endforeach
                     @else
-                        @php $dummyBrands = ['Semua', 'Yamaha', 'Honda', 'Suzuki', 'Toyota', 'Kawasaki', 'Mitsubishi', 'Daihatsu']; @endphp
+                        @php $dummyBrands = ['Semua', 'TDR', 'YSS', 'BRT', 'KOSO', 'UMA Racing', 'RPD', 'DAYTONA']; @endphp
                         @foreach ($dummyBrands as $index => $brand)
                         <button class="brand-card {{ $index === 0 ? 'active' : '' }}" data-jenis="{{ $brand }}" onclick="filterByJenis('{{ $brand }}', this)">
                             <span class="brand-name">{{ strtoupper($brand) }}</span>
@@ -477,7 +486,7 @@
 
         <div class="footer-bottom">
             <div class="container">
-                <p>© 2026 AutoPart Original. All rights reserved.</p>
+                <p>© 2026 NXLS MECHANICAL. All rights reserved.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Kebijakan Privasi</a>
                     <span>·</span>

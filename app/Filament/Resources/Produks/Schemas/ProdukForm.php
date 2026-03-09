@@ -24,8 +24,11 @@ class ProdukForm
                     ->required()
                     ->numeric(),
                 TextInput::make('stok')
-                    ->required()
-                    ->numeric(),
+                ->required()
+                ->numeric()
+                ->default(1)
+                ->rule('min:1') // ini server-side validation
+                ->helperText('Masukkan stok minimal 1'),
                 FileUpload::make('image')
                     ->required()
                     ->columnSpanFull(),

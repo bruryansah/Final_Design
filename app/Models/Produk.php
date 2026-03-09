@@ -14,4 +14,9 @@ class Produk extends Model
     {
         return $this->hasMany(pembelian::class);
     }
+
+    protected $casts = [
+    'harga' => 'integer',
+    'stok' => 'integer',
+    ];
 }
